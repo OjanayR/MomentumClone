@@ -1,4 +1,43 @@
 $(document).ready(function() {
+    //current time
+    // update every 10 seconds;
+    setCurrentTime();
+    setInterval(function() {
+        setCurrentTime();
+    }, 10*1000);
+
+var username = getCookie('username');
+//check cookie
+if(username){
+    $('.greeting').css('display', 'inline-block');
+    $('.user-name').css('display', 'none');
+    $('.greeting').html(`Hello <span class="stored-name">${username}</spam>.`);
+}else{
+    $('.greeting').css('display', 'none');
+    $('.user-name').css('display', 'inline-block');
+    $('.greeting').html(`What's your name?`);
+}
+
+$('.user-name').keypress(function(e) {
+    if(e.which == 13) {
+        var username = e.target.value;
+        if(!username) return;
+        $('.user-name').fadeOut(function() {
+            $('.greeting').html(`Hello ${username}.`);
+            $('.greeting').fadeIn(function() {
+                setCookie('username', username, 365);
+            });
+        });
+    }
+});
+
+});
+
+
+
+
+
+
     $('.user-name').keypress(function(e) {
         if(e.which == 13) {
             var value = e.target.value;
